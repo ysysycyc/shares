@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.shares.mapper.StockHoldMapper">
+  <resultMap id="BaseResultMap" type="com.example.shares.model.StockHold">
+    <!--@mbg.generated-->
+    <!--@Table stock_hold-->
+    <id column="id" property="id" />
+    <result column="stock_id" property="stockId" />
+    <result column="buy_amount" property="buyAmount" />
+    <result column="buy_count" property="buyCount" />
+    <result column="buy_time" property="buyTime" />
+    <result column="buy_tax" property="buyTax" />
+    <result column="account_id" property="accountId" />
+    <result column="create_time" property="createTime" />
+    <result column="update_time" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, stock_id, buy_amount, buy_count, buy_time, buy_tax, account_id, create_time, 
+    update_time
+  </sql>
+</mapper>
