@@ -1,14 +1,15 @@
 package com.example.shares.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.shares.constants.RuntimeDataConstants;
-import com.example.shares.dto.StockDto;
+import com.example.shares.mapper.StockHoldMapper;
+import com.example.shares.model.Stock;
+import com.example.shares.model.StockHold;
 import com.example.shares.utils.UserInfoContext;
 import org.springframework.stereotype.Service;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.example.shares.mapper.StockHoldMapper;
-import com.example.shares.model.StockHold;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -33,11 +34,11 @@ public class StockHoldService extends ServiceImpl<StockHoldMapper, StockHold> {
         return this.list(queryWrapper);
     }
 
-    public void buy(StockDto stock, int buyCount) {
+    public void buy(Stock stock, BigDecimal currentPrice, int buyCount) {
         StockHold stockHold = new StockHold();
-        stockHold.setStockId(stock.getStock().getId());
+        stockHold.setStockId(stock.getId());
         stockHold.setAccountId(UserInfoContext.getAccountId());
-        stockHold.setBuyAmount(stock.getCurrentPrice());
+        stockHold.setBuyAmount(currentPrice);
         stockHold.setBuyCount(buyCount);
         stockHold.setBuyTax(null);
         stockHold.setBuyTime(LocalDateTime.now());

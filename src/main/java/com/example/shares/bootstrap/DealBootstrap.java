@@ -1,8 +1,8 @@
 package com.example.shares.bootstrap;
 
 import com.example.shares.dto.CurrentStockDto;
-import com.example.shares.dto.StockDto;
 import com.example.shares.enums.SellReasonEnum;
+import com.example.shares.model.Stock;
 import com.example.shares.model.StockHold;
 import com.example.shares.service.AccountService;
 import com.example.shares.service.StockFlowService;
@@ -12,6 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
+
+import java.math.BigDecimal;
 
 /**
  * @author lijiawei
@@ -24,15 +26,15 @@ public class DealBootstrap implements ApplicationRunner {
     private static StockFlowService stockFlowService;
     private static StockHoldService stockHoldService;
 
-    public static boolean buy(StockDto stock, int buyCount) {
+    public static boolean buy(Stock stock, BigDecimal currentPrice, int buyCount) {
         // todo transactional
         log.info("buy stock {} {} current amount {} buy count {}",
-                stock.getStock().getCode(), stock.getStock().getName(), stock.getCurrentPrice(), buyCount);
-        boolean success = accountService.buy(stock.getCurrentPrice(), buyCount);
+                stock.getCode(), stock.getName(), currentPrice, buyCount);
+        boolean success = accountService.buy(currentPrice, buyCount);
         if (success) {
-            stockFlowService.buy(stock.getStock(), stock.getCurrentPrice(), buyCount);
+            stockFlowService.buy(stock, currentPrice, buyCount);
             // 写入购买数据
-            stockHoldService.buy(stock, buyCount);
+            stockHoldService.buy(stock, currentPrice, buyCount);
             // 成功后修改账户和持股属性
             RefreshBootstrap.refresh();
             return true;

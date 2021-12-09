@@ -68,6 +68,10 @@ public class StockUtil {
         }).collect(Collectors.toList());
     }
 
+    public static String convertTypeCodeStock(Stock stock) {
+        return stock.getType() + stock.getCode();
+    }
+
     public static void setStockOpen() {
         int retry = 3;
         while (--retry > 0) {

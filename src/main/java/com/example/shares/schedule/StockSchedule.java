@@ -268,7 +268,7 @@ public class StockSchedule {
                 log.info("account {} not had enough amount", account.getName());
                 return;
             }
-            boolean success = DealBootstrap.buy(stock, buyCount);
+            boolean success = DealBootstrap.buy(stock.getStock(), stock.getCurrentPrice(), buyCount);
             if (!success) {
                 log.error("buy error stock code {} account {}", stock.getStock().getCode(), account.getName());
             }
