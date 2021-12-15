@@ -19,17 +19,17 @@ public class TransactionService {
     private DataSourceTransactionManager dataSourceTransactionManager;
 
     public <T> T newTransaction(Callable<T> runnable) {
-        return this.newTransaction(Propagation.REQUIRED.value(), Isolation.DEFAULT.value(), runnable);
+        return this.newTransaction(Propagation.REQUIRED, Isolation.DEFAULT, runnable);
     }
 
     public <T> T newTransaction(Propagation propagation, Callable<T> runnable) {
-        return this.newTransaction(propagation.value(), Isolation.DEFAULT.value(), runnable);
+        return this.newTransaction(propagation, Isolation.DEFAULT, runnable);
     }
 
-    private <T> T newTransaction(int level, int isoLevel, Callable<T> runnable) {
+    private <T> T newTransaction(Propagation level, Isolation isoLevel, Callable<T> runnable) {
         TransactionTemplate transactionTemplate = new TransactionTemplate(dataSourceTransactionManager);
-        transactionTemplate.setPropagationBehavior(level);
-        transactionTemplate.setIsolationLevel(isoLevel);
+        transactionTemplate.setPropagationBehavior(level.value());
+        transactionTemplate.setIsolationLevel(isoLevel.value());
         return transactionTemplate.execute(status -> {
             try {
                 return runnable.call();
