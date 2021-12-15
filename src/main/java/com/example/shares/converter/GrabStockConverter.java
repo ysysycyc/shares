@@ -40,7 +40,6 @@ public class GrabStockConverter {
     public static List<StockDto> convertGrabProfit(String result) {
         GrabAllStockDto grabAllStockDto = JSONObject.parseObject(result, GrabAllStockDto.class);
         List<GrabAllStockDto.Child.Item> diff = grabAllStockDto.getData().getDiff();
-        log.info("totally grab profit stocks {} count", diff.size());
 
         diff = filterHuShen(diff);
 
